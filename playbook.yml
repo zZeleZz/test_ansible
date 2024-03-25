@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+
+  - include: tasks/install_webserver.yml
+  - include: tasks/ufw.yml
+  - include: tasks/add_user.yml
+  - include: tasks/mysql.yml
+  - include: tasks/laravel.yml

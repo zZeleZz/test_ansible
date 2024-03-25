@@ -1,0 +1,20 @@
+---
+
+- name: Add new user
+  user:
+    name: ubuntu
+    password: $6$PP7Eq4qz/oAw.4Ms$ga1I2Xl5.8cqTLdjBtRp6qxjZFAmrQmjdOBoVklaWIJ8H3VcXzPNjXJldUeALFWZ89ZypEA10HZaEMYe9uwxF1
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+
+- name: Set authorized key taken from file
+  authorized_key:
+    user: ubuntu
+    state: present
+    key: "{{ lookup('file', '/home/zelez/ansible/id_rsa.pub') }}"
+
+- name: Set NOPASSWD
+  lineinfile:
+    path: /etc/sudoers
+    line: "ubuntu ALL=(ALL) NOPASSWD: ALL"
