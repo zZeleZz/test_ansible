@@ -1,0 +1,26 @@
+---
+
+- name: Генерация конфигурационного файла default из шаблона
+  template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: Генерация конфигурационного файла nginx.conf из шаблона
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/nginx.conf
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: Start mysql
+  service:
+    name: mysql
+    state: started 
+
+- name: Start php-fpm8.3
+  service:
+    name: php8.3-fpm
+    state: started

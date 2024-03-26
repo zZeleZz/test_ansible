@@ -1,0 +1,28 @@
+---
+
+- name: Add Python module PyMySQL for Ansible
+  pip:
+    name: PyMySQL
+    state: present
+
+- name: Create new DB
+  mysql_db:
+    name: laravel
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create new user MySQL
+  mysql_user:
+    name: new_user
+    password: Qwer!234
+    priv: "laravel.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Check permissions new user MySQL
+  mysql_user:
+    name: new_user
+    append_privs: yes
+    priv: "laravel.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock

@@ -1,0 +1,61 @@
+---
+
+- name: Add repository 
+  apt_repository:
+    repo: ppa:ondrej/php
+
+- name: Update & upgrade
+  apt:
+    name: aptitude
+    state: present
+    update_cache: true
+
+
+
+- name: Install package
+  apt:
+    name:
+      - php
+      - php-cli
+      - php-fpm
+      - php-json
+      - php-common
+      - php-mysql
+      - php-zip
+      - php-gd
+      - php-mbstring
+      - php-curl
+      - php-xml
+      - php-pear
+      - php-bcmath
+      - mysql-server
+      - nginx
+      - pip
+    state: present
+    update_cache: true
+
+- name: Install composer
+  shell: |
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');"
+    sudo mv composer.phar /usr/local/bin/composer
+
+- name: Add ufw rules
+  ufw:
+    rule: allow
+    proto: tcp
+    port: '{{ item }}'
+  loop: 
+    - 22
+    - 80
+    - 443
+
+- name: Enable ufw
+  ufw:
+    state: enabled
+
+- name: Start ufv
+  service: 
+    name: ufw
+    state: started 

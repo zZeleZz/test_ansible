@@ -1,0 +1,10 @@
+---
+- name: Deploy laravel app on Ubuntu 22.04
+  hosts: all
+  become: true
+  roles:
+    - config
+    - webserver
+    - user
+    - mysql
+    - laravel
