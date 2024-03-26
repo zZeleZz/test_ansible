@@ -1,2 +1,0 @@
-#server1 ansible_host=192.168.0.251 ansible_user=zelez ansible_ssh_private_key_file=/home/zelez/.ssh/id_ed25519
-server1 ansible_host=176.109.110.108 ansible_user=zelez ansible_ssh_private_key_file=/home/zelez/.ssh/id_ed25519
