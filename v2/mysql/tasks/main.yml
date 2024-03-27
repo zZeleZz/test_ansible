@@ -7,22 +7,22 @@
 
 - name: Create new DB
   mysql_db:
-    name: laravel
+    name: "{{ DB_DATABASE }}"
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Create new user MySQL
   mysql_user:
-    name: new_user
-    password: Qwer!234
-    priv: "laravel.*:ALL"
+    name: "{{ DB_USERNAME }}"
+    password: "{{ DB_PASSWORD }}"
+    priv: "{{ DB_DATABASE }}.*:ALL"
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Check permissions new user MySQL
   mysql_user:
-    name: new_user
+    name: "{{ DB_USERNAME }}"
     append_privs: yes
-    priv: "laravel.*:ALL"
+    priv: "{{ DB_DATABASE }}.*:ALL"
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock

@@ -2,6 +2,10 @@
 - name: Deploy laravel app on Ubuntu 22.04
   hosts: all
   become: true
+  vars:
+    - DB_DATABASE: "laravel"
+    - DB_USERNAME: "new_user"
+    - DB_PASSWORD: "Qwer!234"
   roles:
     - config
     - webserver

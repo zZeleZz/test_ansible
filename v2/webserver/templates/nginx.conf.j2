@@ -1,8 +1,8 @@
 server {
-    listen 80; 
+    listen {{ nginx_port }}; 
 
-    server_name piu-piu.lan www.piu-piu.lan; # доменные имена сервера
-    root /var/www/laravel/public;
+    server_name {{ nginx_server_name }}; # доменные имена сервера
+    root {{ nginx_root_dir }}; # /var/www/laravel/public;
     index index.php;
     location / {
         try_files $uri $uri/ /index.php?$query_string;

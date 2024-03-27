@@ -1,0 +1,5 @@
+---
+# defaults file for nginx
+nginx_port: 80
+nginx_server_name: piu-piu.lan www.piu-piu.lan
+nginx_root_dir: /var/www/laravel/public
