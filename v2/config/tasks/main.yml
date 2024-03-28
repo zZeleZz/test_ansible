@@ -34,12 +34,19 @@
     state: present
     update_cache: true
 
+- name: Check composer exists
+  stat:
+    path: /usr/local/bin/composer
+  register: composer_status
+
+
 - name: Install composer
   shell: |
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     php composer-setup.php
     php -r "unlink('composer-setup.php');"
     sudo mv composer.phar /usr/local/bin/composer
+  when: not composer_status.stat.exists 
 
 - name: Add ufw rules
   ufw:

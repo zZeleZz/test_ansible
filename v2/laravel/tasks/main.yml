@@ -5,11 +5,13 @@
     repo: https://github.com/laravel/laravel
     dest: /var/www/laravel
     update: no
+  register: git_new
 
 - name: Генерация конфигурационного файла .env из шаблона
   template:
     src: env.j2
     dest: /var/www/laravel/.env
+  when: git_new.changed
 
 - name: Composer
   composer:
@@ -17,12 +19,14 @@
     working_dir: /var/www/laravel
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
+  when: git_new.changed
 
 - name: Start laravel
   shell: |
     cd /var/www/laravel
     php artisan key:generate
     php artisan migrate
+  when: git_new.changed
 
 - name: Change owner  laravel direcorty
   file:
@@ -31,12 +35,14 @@
     recurse: yes
     owner: www-data
     group: www-data
+  when: git_new.changed
 
 - name: Change permissions 755
   file:
     path: /var/www/laravel
     recurse: yes
     mode: '0755'
+  when: git_new.changed
 
 - name: Change permissions 644
   file:
@@ -44,3 +50,4 @@
     recurse: yes
     state: directory
     mode: '0644'
+  when: git_new.changed
